@@ -9,14 +9,66 @@ const freelancers = [
   { name: "Prof. Goose", price: 72, occupation: "driver" },
 ];
 
-const init = () => {
-  const start = document.querySelector("body");
-  start.style.backgroundColor = "lightblue";
-  start.style.height = "300px";
-  start.style.width = "100%";
-  addOl(start);
-  addElement("h1", start, `Average price: $${averagePrice()}`);
-};
+const names = [
+  "Conrad Adams",
+  "Caiden Bolton",
+  "Tomasz Acosta",
+  "Logan Castillo",
+  "Arjan Gomez",
+  "Ruairi Fitzgerald",
+  "Jacob Kirby",
+  "Frances Flynn",
+  "Mina Daniels",
+  "Luisa Pineda",
+  "Eloise Cook",
+  "Camilla Huff",
+  "Francesco Dotson",
+  "Aryan Fry",
+  "Leah Alvarado",
+  "Florence Riggs",
+  "Sydney Barlow",
+  "Nannie Lara",
+  "Suzanne Fleming",
+  "Milton Cameron",
+];
+
+const occupations = [
+  "Automobile Mechanic",
+  "Automotive Body Repairer",
+  "Automotive Engineer",
+  "Automotive Glass Installer",
+  "Avionics Technician",
+  "Baggage Porters and Bellhops",
+  "Baker (Commercial)",
+  "Bank and Branch Managers",
+  "Bank Examiner",
+  "Bank Teller",
+  "Benefits Manager",
+  "Bicycle Mechanic",
+  "Billing Specialist",
+  "Bindery Machine Set-Up Operators",
+  "Bindery Machine Tender",
+  "Biological Technician",
+  "Biology Professor",
+  "Biomedical Engineer",
+  "Biomedical Equipment Technician",
+  "Boat Builder",
+  "Book Editor",
+  "Border Patrol Agent",
+  "Brattice Builder",
+  "Bridge and Lock Tenders",
+  "Broadcast News Analyst",
+  "Broadcast Technician",
+  "Broker's Floor Representative",
+  "Brokerage Clerk",
+  "Budget Accountant",
+  "Budget Analyst",
+];
+const start = document.querySelector("body");
+start.style.backgroundColor = "lightblue";
+start.style.height = "300px";
+start.style.width = "100%";
+const average = document.createElement("h2");
 
 const addElement = (element, parent, str) => {
   const text = document.createElement(element);
@@ -37,28 +89,42 @@ const addLi = (ol) => {
 const addOl = (parent) => {
   const orderList = document.createElement("ol");
   addLi(orderList);
-  addFreelancer(orderList);
   parent.append(orderList);
 };
 
 const averagePrice = () => {
   return (
-    Math.round(freelancers.reduce((acc, curr) => acc + curr.price, 0) / freelancers.length * 100)/ 100
+    Math.round(
+      (freelancers.reduce((acc, curr) => acc + curr.price, 0) /
+        freelancers.length) *
+        100
+    ) / 100
   );
 };
 
-const addFreelancer = (parent) => {
+const render = () => {
+  const orderList = document.querySelector("ol");
   const freelancer = {
-    name: "New freelancer",
+    name: names[Math.floor(Math.random() * names.length)],
     price: Math.floor(Math.random() * 100),
-    occupation: "New",
+    occupation: occupations[Math.floor(Math.random() * occupations.length)],
   };
+  freelancers.push(freelancer);
   addElement(
     "li",
-    parent,
+    orderList,
     `${freelancer.name} with a price $${freelancer.price} and occupation ${freelancer.occupation}`
   );
-  freelancers.push(freelancer)
+  const avg = document.querySelector("#average");
+  average.textContent = `Average price: $${averagePrice()}`;
 };
+const renderAverage = () => {
+}
 
-init();
+average.textContent = `Average price: $${averagePrice()}`;
+
+setInterval(render, 2000);
+average.setAttribute("id", "average");
+start.append(average);
+
+addOl(start);
